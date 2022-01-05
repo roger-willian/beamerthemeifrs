@@ -1,0 +1,597 @@
+\mode<presentation>
+
+
+% Slide de título
+\def\maketitle{%
+  \begingroup%
+    \setbeamertemplate{footline}{%
+      \vspace{-4cm}%
+      \includegraphics[width=\paperwidth]{bg-titulo-16x9}%
+      \setcounter{framenumber}{0}%
+    }%
+    \begin{frame}[t]%
+    \titlepage
+    \end{frame}
+  \endgroup
+}
+\defbeamertemplate*{title page}{ifrs}[1][]
+{%
+  \vspace{-2.5mm}
+  \begin{beamercolorbox}[wd=\paperwidth,center,sep=0mm]{logo}%
+    \inserttitlegraphic\\
+    \vspace{-2.5mm}
+    \usebeamercolor[fg]{separation line}\color{fg}\rule[1ex]{14cm}{0.5pt}
+  \end{beamercolorbox}
+  \vspace{1cm}
+  \begin{beamercolorbox}[wd=12cm,leftskip=1cm,sep=0pt]{title}
+    \usebeamerfont*{title}\MakeUppercase{\inserttitle}\par%
+    \ifx\insertsubtitle\empty
+      \relax
+    \else
+      \usebeamerfont*{subtitle}\insertsubtitle\par
+    \fi
+    \vspace{1cm}
+  \end{beamercolorbox}
+  \begin{beamercolorbox}[wd=12cm,leftskip=1cm]{author}
+    \ifx\insertauthor\empty
+      \relax
+    \else
+      \insertauthor\par
+    \fi
+  \end{beamercolorbox}
+  \begin{beamercolorbox}[wd=12cm,leftskip=1cm]{date}
+    \ifx\insertdate\empty
+      \relax
+    \else
+      \insertdate\par
+    \fi
+  \end{beamercolorbox}
+  \vfill
+}
+
+% Slide de seção
+\AtBeginSection{%
+  \begingroup
+    \setbeamertemplate{footline}{
+      \vspace{-4cm}
+      \includegraphics[width=\paperwidth]{bg-titulo-16x9}
+    }
+    \begin{frame}[t]%
+      \sectionpage
+    \end{frame}
+    \addtocounter{framenumber}{-1}
+  \endgroup
+}
+\defbeamertemplate*{section page}{ifrs}[1][]
+{%
+  \vspace{-2.5mm}
+  \begingroup
+    \begin{beamercolorbox}[wd=\paperwidth,center]{logo}
+        {\usebeamercolor[fg]{titlegraphic}\color{fg}\inserttitlegraphic}\\
+        \vspace{-2.5mm}
+        \usebeamercolor[fg]{separation line}\color{fg}\rule[1ex]{14cm}{1pt}
+    \end{beamercolorbox}\vfill
+    \begin{minipage}[t]{45pt}
+        \vspace{0pt}
+        \begin{beamercolorbox}[wd=45pt,colsep=5pt,center]{section number projected}%
+            \fontsize{30pt}{0pt}\rule[-8pt]{0pt}{35pt}\selectfont\bfseries\thesection%
+        \end{beamercolorbox}%
+    \end{minipage}\hspace{5pt}%
+    \begin{minipage}[t]{12cm}
+        \vspace{0pt}
+        \begin{beamercolorbox}[wd=11.5cm,leftskip=5pt,colsep=5pt]{section title}%
+            \usebeamerfont{section title}\rule[-8pt]{0pt}{35pt}\secname{}\rule[-8pt]{0pt}{35pt}
+        \end{beamercolorbox}
+    \end{minipage}
+    \vspace{1cm}
+  \endgroup
+}
+
+
+% (sub-)section in toc: ifrs
+
+\defbeamertemplate*{section in toc}{ifrs}{%
+    \begin{minipage}[t]{3ex}
+        \begin{beamercolorbox}[center,wd=4ex,colsep=0.5ex]{section number projected}%
+            \rule[-0.7ex]{0pt}{3ex}\inserttocsectionnumber
+        \end{beamercolorbox}
+    \end{minipage}\hspace{1mm}%
+    \begin{minipage}[t]{10cm}
+        \begin{beamercolorbox}[leftskip=1ex,colsep=0.5ex]{section in toc}%
+            \rule[-0.7ex]{0pt}{3ex}\inserttocsection
+        \end{beamercolorbox}%
+    \end{minipage}\vspace{-1ex}%
+}
+
+\defbeamertemplate*{subsection in toc}{ifrs}
+{\leavevmode\leftskip=1.5em\inserttocsubsection\par}
+
+\defbeamertemplate*{subsubsection in toc}{ifrs}
+{\leavevmode\normalsize\usebeamerfont{subsection in toc}\leftskip=3em%
+  \usebeamerfont{subsubsection in toc}\inserttocsubsubsection\par}
+
+
+% (sub-)section in toc shaded, ifrs
+
+\defbeamertemplate*{section in toc shaded}{ifrs}[1][20]
+{\begin{colormixin}{#1!parent.bg}\usebeamertemplate{section in toc}\end{colormixin}\unskip}
+
+\defbeamertemplate*{subsection in toc shaded}{ifrs}[1][20]
+{\begin{colormixin}{#1!parent.bg}\usebeamertemplate{subsection in toc}\end{colormixin}\unskip}
+
+\defbeamertemplate*{subsubsection in toc shaded}{ifrs}[1][20]
+{\begin{colormixin}{#1!parent.bg}\usebeamertemplate{subsubsection in toc}\end{colormixin}\unskip}
+
+
+
+
+
+%
+% Item
+%
+
+% \defbeamertemplateparent{items}{itemize items,enumerate items}
+% {}
+
+
+% Itemize items
+
+% \defbeamertemplateparent{itemize items}{itemize item,itemize subitem,itemize subsubitem}
+% {}
+
+
+% Itemize items, ifrs
+
+\defbeamertemplate*{itemize item}{ifrs}{\usebeamerfont*{itemize item}\hbox{\donotcoloroutermaths$\blacksquare$}}
+\defbeamertemplate*{itemize subitem}{ifrs}{\usebeamerfont*{itemize subitem}\hbox{\donotcoloroutermaths$\blacksquare$}}
+\defbeamertemplate*{itemize subsubitem}{ifrs}{\usebeamerfont*{itemize subsubitem}\hbox{\donotcoloroutermaths$\blacksquare$}}
+
+
+% Enumerate items, ifrs
+
+% \defbeamertemplateparent{enumerate items}{enumerate item,enumerate subitem,enumerate subsubitem,enumerate mini template}
+% {}
+
+\defbeamertemplate*{enumerate item}{ifrs}{\insertenumlabel.}
+\defbeamertemplate*{enumerate subitem}{ifrs}{\insertenumlabel.\insertsubenumlabel}
+\defbeamertemplate*{enumerate subsubitem}{ifrs}{\insertenumlabel.\insertsubenumlabel.\insertsubsubenumlabel}
+\defbeamertemplate*{enumerate mini template}{ifrs}{\insertenumlabel}
+
+
+% Description item, ifrs
+
+\defbeamertemplate*{description item}{ifrs}{\insertdescriptionitem}
+
+
+% Itemize/Enumerate body
+
+\defbeamertemplate*{itemize/enumerate body begin}{ifrs}{}
+\defbeamertemplate*{itemize/enumerate body end}{ifrs}{}
+
+\defbeamertemplate*{itemize/enumerate subbody begin}{ifrs}{}
+\defbeamertemplate*{itemize/enumerate subbody end}{ifrs}{}
+
+\defbeamertemplate*{itemize/enumerate subsubbody begin}{ifrs}{}
+\defbeamertemplate*{itemize/enumerate subsubbody end}{ifrs}{}
+
+% Description body
+
+\defbeamertemplate*{description body begin}{ifrs}{}
+\defbeamertemplate*{description body end}{ifrs}{}
+
+
+% Alerted text
+
+\defbeamertemplate*{alerted text begin}{ifrs}{\setbeamercolor{local structure}{parent=alerted text}}
+
+
+
+% Structured text
+
+% empyt defaults
+
+
+% Bibliography items
+
+\defbeamertemplate*{bibliography item}{ifrs}
+{\lower3.5pt\hbox{\hskip2pt\pgfuseimage{beamericonarticle}\hskip1pt}}
+
+\defbeamertemplate*{bibliography entry article}{ifrs}{}
+\defbeamertemplate*{bibliography entry title}{ifrs}{\par}
+\defbeamertemplate*{bibliography entry location}{ifrs}{\par}
+\defbeamertemplate*{bibliography entry note}{ifrs}{\par}
+
+
+% Buttons
+
+\newdimen\beamer@dima%
+\newdimen\beamer@dimb%
+
+\defbeamertemplate*{button}{ifrs}
+{%
+  \setbox\beamer@tempbox=\hbox{{\insertbuttontext}}%
+  \ht\beamer@tempbox=6pt%
+  \dp\beamer@tempbox=0pt%
+  \setbox\beamer@tempbox=\vbox{\box\beamer@tempbox\vskip2pt}%
+  \beamer@tempdim=\wd\beamer@tempbox%
+  \beamer@dima=\beamer@tempdim\advance\beamer@dima by2.2pt
+  \beamer@dimb=\beamer@tempdim\advance\beamer@dimb by4pt
+  \begin{pgfpicture}{-4pt}{0pt}{\the\beamer@tempdim}{8pt}
+    \color{bg}
+    \pgfsetlinewidth{0.8pt}
+    \pgfpathqmoveto{0pt}{0pt}
+    \pgfpathqcurveto{-2.2pt}{0pt}{-4pt}{1.8pt}{-4pt}{4pt}
+    \pgfpathqcurveto{-4pt}{6.2pt}{-2.2pt}{8pt}{0pt}{8pt}
+    \pgfpathlineto{\pgfpoint{\the\beamer@tempdim}{8pt}}
+    \pgfpathcurveto%
+    {\pgfpoint{\the\beamer@dima}{8pt}}%
+    {\pgfpoint{\the\beamer@dimb}{6.2pt}}%
+    {\pgfpoint{\the\beamer@dimb}{4pt}}
+    \pgfpathcurveto%
+    {\pgfpoint{\the\beamer@dimb}{1.8pt}}%
+    {\pgfpoint{\the\beamer@dima}{0pt}}%
+    {\pgfpoint{\the\beamer@tempdim}{0pt}}
+    \pgfpathclose
+    \pgfusepathqfill
+    \colorlet{bg}{parent.bg}
+    \usebeamercolor[fg]{button border}
+    \pgfpathqmoveto{0pt}{0pt}
+    \pgfpathqcurveto{-2.2pt}{0pt}{-4pt}{1.8pt}{-4pt}{4pt}
+    \pgfpathqcurveto{-4pt}{6.2pt}{-2.2pt}{8pt}{0pt}{8pt}
+    \pgfpathlineto{\pgfpoint{\the\beamer@tempdim}{8pt}}
+    \pgfpathcurveto%
+    {\pgfpoint{\the\beamer@dima}{8pt}}%
+    {\pgfpoint{\the\beamer@dimb}{6.2pt}}%
+    {\pgfpoint{\the\beamer@dimb}{4pt}}
+    \pgfpathcurveto%
+    {\pgfpoint{\the\beamer@dimb}{1.8pt}}%
+    {\pgfpoint{\the\beamer@dima}{0pt}}%
+    {\pgfpoint{\the\beamer@tempdim}{0pt}}
+    \pgfpathclose
+    \pgfusepathqstroke
+  \end{pgfpicture}%
+  \hskip-\beamer@tempdim%
+  \box\beamer@tempbox%
+  \kern4pt%
+}
+
+
+% Abstract
+
+\defbeamertemplate*{abstract title}{ifrs}
+{%
+  \begin{center}%
+    \abstractname
+  \end{center}%
+}
+
+\defbeamertemplate*{abstract begin}{ifrs}
+{\beamercolorbox[vmode]{abstract}\leftskip2em\rightskip2em plus 1fill\usebeamerfont*{abstract}}
+
+\defbeamertemplate*{abstract end}{ifrs}
+{\medskip\endbeamercolorbox}
+
+
+% Verse
+
+\defbeamertemplate*{verse begin}{ifrs}
+{\beamercolorbox[vmode]{verse}}
+
+\defbeamertemplate*{verse end}{ifrs}
+{\endbeamercolorbox}
+
+
+% Quotation
+
+\defbeamertemplate*{quotation begin}{ifrs}
+{\beamercolorbox[vmode]{quotation}}
+
+\defbeamertemplate*{quotation end}{ifrs}
+{\endbeamercolorbox}
+
+
+% Quote
+
+\defbeamertemplate*{quote begin}{ifrs}
+{\beamercolorbox[vmode]{quote}}
+
+\defbeamertemplate*{quote end}{ifrs}
+{\endbeamercolorbox}
+
+
+% Footnotes
+
+\defbeamertemplate*{footnote}{ifrs}
+{
+  \parindent 1em\noindent%
+  \raggedright
+  \hbox to 1.8em{\hfil\insertfootnotemark}\insertfootnotetext\par%
+}
+
+
+% Captions
+
+\defbeamertemplate*{caption}{ifrs}
+{%
+  \raggedright
+  {%
+    \usebeamercolor[fg]{caption name}%
+    \usebeamerfont*{caption name}%
+    \insertcaptionname
+    \usebeamertemplate{caption label separator}%
+  }%
+  \insertcaption\par
+}
+\defbeamertemplate*{caption label separator}{ifrs}{:\ }
+
+% Blocks
+
+% \defbeamertemplateparent{blocks}{block begin,block end,%
+%   block alerted begin,block alerted end,%
+%   block example begin,block example end}
+% {}
+
+\defbeamertemplate{block begin}{ifrs}
+{
+  \par\vskip\medskipamount%
+  \begin{beamercolorbox}[colsep*=.75ex]{block title}
+    \usebeamerfont*{block title}\insertblocktitle%
+  \end{beamercolorbox}%
+  {\parskip0pt\par}%
+  \ifbeamercolorempty[bg]{block title}
+  {}
+  {\ifbeamercolorempty[bg]{block body}{}{\nointerlineskip\vskip-0.5pt}}%
+  \usebeamerfont{block body}%
+  \begin{beamercolorbox}[colsep*=.75ex,vmode]{block body}%
+    \ifbeamercolorempty[bg]{block body}{\vskip-.25ex}{\vskip-.75ex}\vbox{}%
+}
+\defbeamertemplate{block end}{ifrs}  
+{\end{beamercolorbox}\vskip\smallskipamount}
+
+\defbeamertemplate*{block alerted begin}{ifrs}
+{
+  \par\vskip\medskipamount%
+  \begin{beamercolorbox}[colsep*=.75ex]{block title alerted}
+    \usebeamerfont*{block title alerted}\insertblocktitle%
+  \end{beamercolorbox}%
+  {\parskip0pt\par}%
+  \ifbeamercolorempty[bg]{block title alerted}
+  {}
+  {\ifbeamercolorempty[bg]{block body alerted}{}{\nointerlineskip\vskip-0.5pt}}%
+  \usebeamerfont{block body alerted}%
+  \begin{beamercolorbox}[colsep*=.75ex,vmode]{block body alerted}%
+    \ifbeamercolorempty[bg]{block body alerted}{\vskip-.25ex}{\vskip-.75ex}\vbox{}%
+}
+
+\defbeamertemplate*{block alerted end}{ifrs}
+{\end{beamercolorbox}\vskip\smallskipamount}
+
+
+\defbeamertemplate*{block example begin}{ifrs}
+{
+  \par\vskip\medskipamount%
+  \begin{beamercolorbox}[colsep*=.75ex]{block title example}
+    \usebeamerfont*{block title example}\insertblocktitle%
+  \end{beamercolorbox}%
+  {\parskip0pt\par}%
+  \ifbeamercolorempty[bg]{block title example}
+  {}
+  {\ifbeamercolorempty[bg]{block body example}{}{\nointerlineskip\vskip-0.5pt}}%
+  \usebeamerfont{block body example}%
+  \begin{beamercolorbox}[colsep*=.75ex,vmode]{block body example}%
+    \ifbeamercolorempty[bg]{block body example}{\vskip-.25ex}{\vskip-.75ex}\vbox{}%
+}
+\defbeamertemplate*{block example end}{ifrs}
+{\end{beamercolorbox}\vskip\smallskipamount}
+
+
+
+
+% Theorems
+
+% \defbeamertemplateparent{theorems}{theorem begin,theorem end}
+% {}
+
+\defbeamertemplate*{theorem begin}{ifrs}
+{%
+  \begin{\inserttheoremblockenv}
+  {%
+    \inserttheoremname
+    \ifx\inserttheoremaddition\@empty\else\ (\inserttheoremaddition)\fi%
+  }%
+}
+
+\defbeamertemplate*{theorem end}{ifrs}
+{\end{\inserttheoremblockenv}}
+
+
+% Proofs
+\defbeamertemplate*{proof begin}{ifrs}
+{\begin{block}{\insertproofname}}
+
+\defbeamertemplate*{proof end}{ifrs}
+{\end{block}}
+
+\defbeamertemplate*{qed symbol}{ifrs}
+{\openbox}
+
+% Accordion
+\makeatletter
+\def\begin@accordion[#1]{%
+    \begingroup
+    \def\accordion@plus{%
+        \tikz\draw[line width=0.3ex, x=1ex, y=1ex] (0.5,0) -- (0.5,1)(0,0.5) -- (1,0.5);
+        \hspace{1ex}
+    }
+    \def\accordion@minus{%
+        \raisebox{0.5ex}{\tikz\draw[line width=0.3ex, x=1ex, y=1ex] (0,0.5) -- (1,0.5);}
+        \hspace{1ex}
+    }
+    \setbeamercolor{block title}{fg=verdec}
+    \ifx#1>2
+        \only<1>{\setbeamercolor{block title}{fg=white}}
+    \else
+        \only<1,#1->{\setbeamercolor{block title}{fg=white}}
+    \fi
+    \newcommand\slice[2]{%
+        \begingroup
+        \let\insertaccordion\empty
+        \let\accordion@icon\accordion@plus
+        \only<+(1)>{%
+            \setbeamercolor{block title}{fg=white}
+            \def\insertaccordion{##2\vspace{1ex}}
+            \let\accordion@icon\accordion@minus
+        }%
+        \begin{block}{\accordion@icon \vphantom{fj}##1}%
+            \insertaccordion\vspace{-1ex}%
+        \end{block}\vspace{-1ex}
+        \endgroup
+    }
+}
+\newenvironment{accordion}{\@ifnextchar[{\begin@accordion}{\begin@accordion[0]}}{%
+    \vspace{1em}
+    \endgroup
+}
+\makeatother
+
+\setbeamertemplate{blocks}[default]
+
+\def\note#1{{\usebeamercolor[fg]{example text}\color{fg}#1}}
+\def\subsubsection#1{\vspace{\bigskipamount}{\usebeamercolor[fg]{subsubsection title}\color{fg}\textbf{#1}}\medskip\par}
+
+\lstdefinestyle{code}{
+    language=Java,
+    frame=single,
+    framerule=0pt,
+    framesep=0pt,
+    belowskip=0pt,
+    backgroundcolor=\color{codebg},
+    commentstyle=\color{codecomment},
+    keywordstyle=\color{codekeyword},
+    numberstyle=\scriptsize\color{codelines},
+    stringstyle=\color{codestring},
+    identifierstyle=\color{codevar},
+    basicstyle=\footnotesize\ttfamily\color{codefg},
+    breakatwhitespace=false,
+    breaklines=true,
+    captionpos=b,
+    keepspaces=true,
+    numbers=left,
+    numbersep=1ex,
+    showspaces=false,
+    showstringspaces=false,
+    showtabs=false,
+    tabsize=2,
+    literate=%
+      {à}{{\`a}}{1}%
+      {á}{{\'a}}{1}%
+      {â}{{\^a}}{1}%
+      {ã}{{\~a}}{1}%
+      {é}{{\'e}}{1}%
+      {ê}{{\^e}}{1}%
+      {í}{{\'i}}{1}%
+      {ó}{{\'o}}{1}%
+      {ô}{{\^o}}{1}%
+      {õ}{{\~o}}{1}%
+      {ú}{{\'u}}{1}%
+      {ç}{{\c{c}}}{1}%
+      {À}{{\`A}}{1}%
+      {Á}{{\'A}}{1}%
+      {Â}{{\^A}}{1}%
+      {Ã}{{\~A}}{1}%
+      {É}{{\'E}}{1}%
+      {Ê}{{\^E}}{1}%
+      {Í}{{\'I}}{1}%
+      {Ó}{{\'O}}{1}%
+      {Ô}{{\^O}}{1}%
+      {Õ}{{\~O}}{1}%
+      {Ú}{{\'U}}{1}%
+      {Ç}{{\c{C}}}{1}
+}
+
+\lstset{style=code}
+
+
+\makeatletter
+
+% ambiente com uma caixa (mdframed) para colocar código dentro
+% \begin{code}[<mdframed params>]
+%   <código>
+% \end{code}
+\def\begincode@a[#1]{%
+  \mdfsetup{%
+    leftmargin=0pt,%
+    rightmargin=0pt,%
+    skipabove=\medskipamount,%
+    skipbelow=\medskipamount,%
+    innerleftmargin=1.5em,%
+    innerrightmargin=5pt,%
+    innertopmargin=1ex,
+    innerbottommargin=0pt,
+    linecolor=codebg,%
+    roundcorner=5pt,
+    backgroundcolor=codebg,
+    font=\footnotesize\ttfamily,
+    fontcolor=codefg%
+  }%
+  \begin{mdframed}[#1]
+}
+\newenvironment{code}[0]{\@ifnextchar[{\begincode@a}{\begincode@a[]}}{%
+  \end{mdframed}
+}
+
+% ambiente que simula um editor (beamercolorbox + mdframed) para colocar código dentro
+% \begin{editor}{<título>}[<mdframed params>]
+%   <código>
+% \end{editor}
+\def\begineditor@a#1[#2]{%
+  \begin{beamercolorbox}[rounded=true]{editor}
+    \begin{tikzpicture}
+      \filldraw[vermelho] (0,0) circle (5pt) node{};
+      \filldraw[amarelo] (0.5,0) circle (5pt) node{};
+      \filldraw[verdec] (1,0) circle (5pt) node{};
+    \end{tikzpicture}\hfill\footnotesize\color{codetitle}\raisebox{1mm}{#1}\hfill{}
+    \begin{code}[#2]%
+}
+\newenvironment{editor}[1]{\@ifnextchar[{\begineditor@a{#1}}{\begineditor@a{#1}[]}}{%
+    \end{code}%
+  \end{beamercolorbox}
+}
+
+% insere um arquivo com código dentro de um ambiente code
+% \sourcecode[<lstlisting params>]{<file path>}[<mdf params>]
+\def\sourcecode{\@ifnextchar[{\sourcecode@a}{\sourcecode@a[]}}
+\def\sourcecode@a[#1]#2{\@ifnextchar[{\sourcecode@b[#1]{#2}}{\sourcecode@b[#1]{#2}[]}}
+\def\sourcecode@b[#1]#2[#3]{%
+  \begin{code}[#3]%
+    \lstinputlisting[#1]{#2}%
+  \end{code}%
+}
+
+% insere um arquivo com código dentro de um editor
+% \sourcecodeeditor[<lstlisting params>]{<file path>}[<mdf params>]
+\def\sourcecodeeditor{\@ifnextchar[{\sourcecodeeditor@a}{\sourcecodeeditor@a[]}}
+\def\sourcecodeeditor@a[#1]#2{\@ifnextchar[{\sourcecodeeditor@b[#1]{#2}}{\sourcecodeeditor@b[#1]{#2}[]}}
+\def\sourcecodeeditor@b[#1]#2[#3]{%
+  \begin{editor}{#2}[#3]
+    \lstinputlisting[#1]{#2}
+  \end{editor}
+}
+
+% insere um slide com código
+% \sourcecodeframe[<lstlisting params>]{<file path>}[<mdf params>]
+\def\sourcecodeframe{\@ifnextchar[{\sourcecodeframe@a}{\sourcecodeframe@a[]}}
+\def\sourcecodeframe@a[#1]#2{\@ifnextchar[{\sourcecodeframe@b[#1]{#2}}{\sourcecodeframe@b[#1]{#2}[]}}
+\def\sourcecodeframe@b[#1]#2[#3]{%
+  \begingroup
+  \setbeamercolor{background canvas}{bg=codebg}
+  \begin{frame}[plain]%
+    \sourcecode[#1]{#2}[#3]
+  \end{frame}
+  \endgroup
+}
+\makeatother
+
+
+\mode
+<all>

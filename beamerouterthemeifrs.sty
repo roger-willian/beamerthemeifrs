@@ -1,0 +1,73 @@
+\setbeamertemplate{frametitle}{
+    \begin{beamercolorbox}[wd=14cm,ht=1.5cm]{frametitle}
+        \MakeUppercase{\insertframetitle}%
+        \ifx\insertframesubtitle\empty%
+            \relax
+        \else
+            \\\insertframesubtitle
+        \fi
+        \\[-10pt]
+        \makeatletter
+        \usebeamercolor*[fg]{separation line}\color{fg}%
+        \hspace{-\beamer@leftmargin}\rule{12cm}{1pt}
+        \makeatother
+    \end{beamercolorbox}
+}
+
+\setbeamertemplate{page number in head/foot}{%
+    \begin{beamercolorbox}[wd=1.4cm,ht=1cm,colsep=0pt,center]{page number in head/foot}%
+        \insertframenumber%
+    \end{beamercolorbox}%
+}
+
+% HACK: O beamer calcula automaticamente a altura da footline, o que poderia
+% gerar warnings quando compila o LaTeX porque a imagem do IFRS tem aquele lado
+% direito mais alto e muitas vezes não é interessante cortar o texto por ali.
+\let\oldmaketitle\maketitle
+\def\ifrsfootline{%
+    \setbeamertemplate{footline}{%
+        \vspace*{-2cm}\includegraphics[width=\paperwidth]{bg-16x9.pdf}
+
+        \vspace{-1.5cm}\hfill\usebeamertemplate***{page number in head/foot}
+        \vspace{0.5cm}
+    }
+}
+\def\maketitle{\let\maketitle\oldmaketitle\ifrsfootline\maketitle}
+\setbeamertemplate{footline}{%
+    \rule{\paperwidth}{0.37cm}%
+}
+
+\setbeamertemplate{navigation symbols}{}
+
+\titlegraphic{
+    \begin{tikzpicture}[scale=0.6, every node/.style={scale=0.6}]
+        \tikzstyle{quad} = [rectangle,fill=verdelogo,rounded corners=0.4mm,minimum width=4mm,minimum height=4mm]
+        \tikzstyle{circ} = [circle,fill=vermelhologo,minimum size=4.4mm]
+
+        \node[circ]       at (6mm,20.4mm) {};
+        \node[quad] (esq) at (6mm,15.6mm) {};
+        \node[quad]       at (6mm,10.8mm) {};
+        \node[quad]       at (6mm,6mm) {};
+
+        \node[quad] (cimo)  at (10.8mm,20.4mm) {};
+        \node[quad]         at (10.8mm,15.6mm) {};
+        \node[quad]         at (10.8mm,10.8mm) {};
+        \node[quad] (baixo) at (10.8mm,6mm) {};
+
+        \node[quad] at (15.6mm,20.4mm) {};
+        \node[quad] at (15.6mm,10.8mm) {};
+        
+        \ifx\insertinstitute\empty
+            \node[anchor=south west,inner sep=0mm,font=\fontsize{5.7mm}{6mm}\selectfont\bf,text=textologo] (IF) at (20.6mm,8.65mm) {\hspace{-0.6mm}INSTITUTO FEDERAL};
+            \node[anchor=south west,inner sep=0mm,font=\fontsize{4.275mm}{4.5mm}\selectfont,text=textologo] at (20.6mm,2.6mm) {\hspace{-0.5mm}\strut Rio Grande do Sul};
+            \node (nome) at (20.6mm,2.6mm) {};
+        \else
+            \node[anchor=south west,inner sep=0mm,font=\fontsize{5.7mm}{6mm}\selectfont\bf,text=textologo] (IF) at (20.6mm,13.45mm) {\hspace{-0.6mm}INSTITUTO FEDERAL};
+            \node[anchor=south west,inner sep=0mm,font=\fontsize{4.275mm}{4.5mm}\selectfont,text=textologo] at (20.6mm,8.65mm) {\hspace{-0.5mm}Rio Grande do Sul};
+            \node[anchor=south west,inner sep=0mm,font=\fontsize{4.275mm}{4.5mm}\selectfont,text=textologo] (nome) at (20.6mm,2.6mm) {\hspace{-0.5mm}\strut\insertinstitute};
+        \fi
+        \begin{scope}[on background layer]
+        \node[scale=1.67,fill=fundologo,fit=(esq)(cimo)(baixo)(IF)(nome),inner sep=2.4mm] {};
+        \end{scope}
+    \end{tikzpicture}
+}
