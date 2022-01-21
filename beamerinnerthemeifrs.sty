@@ -49,6 +49,28 @@
   \vfill
 }
 
+% bibliografia
+\newcommand{\makebib}[1]{%
+  \section*{\bibname}
+  \begingroup
+    \setbeamertemplate{frametitle}{%
+      \begin{beamercolorbox}[wd=14cm,ht=1.5cm]{frametitle}
+        \usebeamerfont{frametitle}\MakeUppercase{\bibname}\\[-10pt]
+        \usebeamercolor*[fg]{separation line}\color{fg}%
+        \makeatletter
+        \hspace{-\beamer@leftmargin}\rule{12cm}{1pt}
+        \makeatother
+      \end{beamercolorbox}
+    }
+    \setbeamertemplate{bibliography item}{\rule{0pt}{1.5em}}
+    \setbeamertemplate{footline}{}
+    \begin{frame}[t,allowframebreaks]{\bibname}
+      \vspace{-2em}\small
+      \bibliography{#1}
+    \end{frame}
+  \endgroup
+}
+
 % Slide de seção
 \AtBeginSection[]{%
   \begingroup
