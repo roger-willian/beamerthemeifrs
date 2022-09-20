@@ -54,7 +54,7 @@ Entre no diretório e, se , para gerar o PDF use o comando:
 
 O [Overleaf](https://www.overleaf.com) é um serviço de edição de LaTeX e geração de PDF muito usado no meio acadêmico.
 
-Para copiar os arquivos necessários para um novo projeto no Overleaf e já sair editando esse projeto, basta clicar [aqui](https://www.overleaf.com/docs?snip_uri=https://github.com/roger-willian/beamerthemeifrs/releases/download/v1.0.0/release.zip).
+Para copiar os arquivos necessários para um novo projeto no Overleaf e já sair editando esse projeto, basta clicar [aqui](https://www.overleaf.com/docs?snip_uri=https://github.com/roger-willian/beamerthemeifrs/releases/download/v1.0.1/release.zip).
 
 # <a name="dependencias"></a>Dependências
 
