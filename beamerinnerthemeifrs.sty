@@ -635,10 +635,10 @@
 % botões decorativos da janela
 \def\botoesjanela{%
 \begin{tikzpicture}
-  \draw[line width=0.5pt] (0,0) -- +(0.25,0) node{};
-  \draw[line width=0.5pt] (0.4,0) rectangle +(0.25,0.25) node{};
-  \draw[line width=0.5pt] (0.8,0) -- +(0.25,0.25) node{};
-  \draw[line width=0.5pt] (0.8,0.25) -- +(0.25,-0.25) node{};
+  \draw[line width=0.5pt, codelines] (0,0) -- +(0.25,0) node{};
+  \draw[line width=0.5pt, codelines] (0.4,0) rectangle +(0.25,0.25) node{};
+  \draw[line width=0.5pt, codelines] (0.8,0) -- +(0.25,0.25) node{};
+  \draw[line width=0.5pt, codelines] (0.8,0.25) -- +(0.25,-0.25) node{};
 \end{tikzpicture}%
 }
 
@@ -718,6 +718,7 @@
       \begin{column}[t]{\paperwidth}
         \arquivo[#1]{#2}[%
         no shadow,
+        before skip=1ex,
         colframe=codefg,
         sharp corners,
         height=\dimexpr\paperheight-1pt,
