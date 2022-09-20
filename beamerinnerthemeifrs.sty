@@ -1,6 +1,5 @@
 \mode<presentation>
 
-
 % Slide de título
 \def\maketitle{%
   \begingroup%
@@ -16,7 +15,6 @@
 }
 \defbeamertemplate*{title page}{ifrs}[1][]
 {%
-  \vspace{-2.5mm}
   \begin{beamercolorbox}[wd=\paperwidth,center,sep=0mm]{logo}%
     \inserttitlegraphic\\
     \vspace{-2.5mm}
@@ -30,7 +28,7 @@
     \else
       \usebeamerfont*{subtitle}\insertsubtitle\par
     \fi
-    \vspace{1cm}
+    \vspace{0.5cm}
   \end{beamercolorbox}
   \begin{beamercolorbox}[wd=12cm,leftskip=1cm]{author}
     \ifx\insertauthor\empty
@@ -47,7 +45,23 @@
     \fi
   \end{beamercolorbox}
   \vfill
+  \ifx\insertthanks\empty
+    \relax
+  \else
+    \begin{beamercolorbox}[wd=12cm,leftskip=1cm,sep=0pt]{title}
+      \usebeamerfont*{subtitle}\insertthanks\par
+    \end{beamercolorbox}
+  \fi
+  \vfill
 }
+
+% slide de agradecimento
+\newcommand{\makethanks}[1]{%
+  \def\insertthanks{#1}
+  \maketitle
+  \let\insertthanks\empty\relax
+}
+\let\insertthanks\empty\relax
 
 % bibliografia
 \newcommand{\makebib}[1]{%
@@ -65,8 +79,7 @@
     \setbeamertemplate{bibliography item}{\rule{0pt}{1.5em}}
     \setbeamertemplate{footline}{}
     \begin{frame}[t,allowframebreaks]{\bibname}
-      \vspace{-2em}\small
-      \bibliography{#1}
+      \small\vspace{-\parskip}\bibliography{#1}
     \end{frame}
   \endgroup
 }
@@ -86,7 +99,6 @@
 }
 \defbeamertemplate*{section page}{ifrs}[1][]
 {%
-  \vspace{-2.5mm}
   \begingroup
     \begin{beamercolorbox}[wd=\paperwidth,center]{logo}
         {\usebeamercolor[fg]{titlegraphic}\color{fg}\inserttitlegraphic}\\
@@ -118,9 +130,12 @@
             \rule[-0.7ex]{0pt}{3ex}\inserttocsectionnumber
         \end{beamercolorbox}
     \end{minipage}\hspace{1mm}%
-    \begin{minipage}[t]{10cm}
+    \begin{minipage}[t]{\dimexpr\columnwidth-1mm-3ex}
         \begin{beamercolorbox}[leftskip=1ex,colsep=0.5ex]{section in toc}%
-            \rule[-0.7ex]{0pt}{3ex}\inserttocsection
+            \rule[-0.7ex]{0pt}{3ex}\linespread{0.7}\selectfont%
+            \begingroup\let \\ ~\relax%
+            \inserttocsection%
+            \endgroup%
         \end{beamercolorbox}%
     \end{minipage}\vspace{-1ex}%
 }
@@ -482,24 +497,27 @@
 \def\subsubsection#1{\vspace{\bigskipamount}{\usebeamercolor[fg]{subsubsection title}\color{fg}\textbf{#1}}\medskip\par}
 
 \lstdefinestyle{code}{
-    language=Java,
-    frame=single,
+    language=C,
+    upquote=true,
+    frame=none,
     framerule=0pt,
     framesep=0pt,
     belowskip=0pt,
+    aboveskip=0pt,
     backgroundcolor=\color{codebg},
     commentstyle=\color{codecomment},
     keywordstyle=\color{codekeyword},
     numberstyle=\scriptsize\color{codelines},
     stringstyle=\color{codestring},
     identifierstyle=\color{codevar},
-    basicstyle=\footnotesize\ttfamily\color{codefg},
+    directivestyle=\color{codedirective},
+    basicstyle=\footnotesize\ttfamilywithbold\color{codefg},
     breakatwhitespace=false,
     breaklines=true,
     captionpos=b,
     keepspaces=true,
     numbers=left,
-    numbersep=1ex,
+    numbersep=1.25ex,
     showspaces=false,
     showstringspaces=false,
     showtabs=false,
@@ -531,89 +549,225 @@
       {Ç}{{\c{C}}}{1}
 }
 
+\lstdefinestyle{text}{%
+    commentstyle={},
+    keywordstyle={},
+    stringstyle={},
+    identifierstyle={},
+    basicstyle=\color{codetext}
+}
+
 \lstset{style=code}
+
 
 
 \makeatletter
 
-% ambiente com uma caixa (mdframed) para colocar código dentro
-% \begin{code}[<mdframed params>]
-%   <código>
-% \end{code}
-\def\begincode@a[#1]{%
-  \mdfsetup{%
-    leftmargin=0pt,%
-    rightmargin=0pt,%
-    skipabove=\medskipamount,%
-    skipbelow=\medskipamount,%
-    innerleftmargin=1.5em,%
-    innerrightmargin=5pt,%
-    innertopmargin=1ex,
-    innerbottommargin=0pt,
-    linecolor=codebg,%
-    roundcorner=5pt,
-    backgroundcolor=codebg,
-    font=\footnotesize\ttfamily,
-    fontcolor=codefg%
+% cria um novo label pílula para usar depois
+% \newpill{<label>}{<cor>}
+\newcommand{\newpill}[2]{%
+  \expandafter\def\csname pill@#1\endcsname{%
+    \tcbox[%
+      on line,
+      boxsep=0pt,
+      left=0.3ex,
+      right=0.3ex,
+      top=0.1ex,
+      bottom=0.1ex,
+      colback={#2},
+      colframe={#2},
+      coltext=white
+    ]{#1}%
   }%
-  \begin{mdframed}[#1]
-}
-\newenvironment{code}[0]{\@ifnextchar[{\begincode@a}{\begincode@a[]}}{%
-  \end{mdframed}
 }
 
-% ambiente que simula um editor (beamercolorbox + mdframed) para colocar código dentro
-% \begin{editor}{<título>}[<mdframed params>]
-%   <código>
-% \end{editor}
-\def\begineditor@a#1[#2]{%
-  \begin{beamercolorbox}[rounded=true]{editor}
-    \begin{tikzpicture}
-      \filldraw[vermelho] (0,0) circle (5pt) node{};
-      \filldraw[amarelo] (0.5,0) circle (5pt) node{};
-      \filldraw[verdec] (1,0) circle (5pt) node{};
-    \end{tikzpicture}\hfill\footnotesize\color{codetitle}\raisebox{1mm}{#1}\hfill{}
-    \begin{code}[#2]%
-}
-\newenvironment{editor}[1]{\@ifnextchar[{\begineditor@a{#1}}{\begineditor@a{#1}[]}}{%
-    \end{code}%
-  \end{beamercolorbox}
+\newcommand{\pill}[1]{%
+  \let\temp@pill\expandafter\csname pill@#1\endcsname%
+  \temp@pill%
 }
 
-% insere um arquivo com código dentro de um ambiente code
-% \sourcecode[<lstlisting params>]{<file path>}[<mdf params>]
-\def\sourcecode{\@ifnextchar[{\sourcecode@a}{\sourcecode@a[]}}
-\def\sourcecode@a[#1]#2{\@ifnextchar[{\sourcecode@b[#1]{#2}}{\sourcecode@b[#1]{#2}[]}}
-\def\sourcecode@b[#1]#2[#3]{%
-  \begin{code}[#3]%
-    \lstinputlisting[#1]{#2}%
-  \end{code}%
+% código inline com possível realce
+% \inline{<código>}  % com realce
+% \inline*{<código>} % sem realce
+\newcommand{\inline}{\@ifstar{\inline@a}{\inline@b}}
+\newcommand{\inline@x}[1]{%
+  \tcbox[%
+    on line,
+    boxsep=0pt,
+    boxrule=.1ex,
+    colback=codebg,
+    colframe=codebg,
+    left=0.3ex,
+    right=0.3ex,
+    top=0.0ex,
+    bottom=0.0ex,
+  ]{#1}%
+}
+\newcommand{\codestrut}{\rule[-0.52ex]{0pt}{2ex}}
+\newcommand{\inline@a}[1]{\inline@x{\large\ttfamily\upshape\color{codetext}\codestrut{#1}}}
+\newcommand{\inline@b}[1]{\inline@x{\lstinline[basicstyle=\large\ttfamily\upshape\color{codefg}\codestrut]{#1}}}
+
+% snippet de código
+% \begin{snippet}[lstparams]
+% <código>
+% \end{snippet}
+\newtcblisting{snippet}[1][]{%
+  listing only,
+  colframe=codebg,
+  boxrule=0.5pt,
+  left=0pt,
+  bottom=0pt,
+  right=0pt,
+  top=2\medskipamount,
+  coltext=codefg,
+  colback=codebg,
+  fontupper=\ttfamily,
+  enlarge bottom by=-\medskipamount,
+  listing options={%
+    style=code,
+    inputpath=.,
+    numbers=none,
+    basicstyle=\large\ttfamilywithbold\color{codefg},
+    #1
+  }
 }
 
-% insere um arquivo com código dentro de um editor
-% \sourcecodeeditor[<lstlisting params>]{<file path>}[<mdf params>]
-\def\sourcecodeeditor{\@ifnextchar[{\sourcecodeeditor@a}{\sourcecodeeditor@a[]}}
-\def\sourcecodeeditor@a[#1]#2{\@ifnextchar[{\sourcecodeeditor@b[#1]{#2}}{\sourcecodeeditor@b[#1]{#2}[]}}
-\def\sourcecodeeditor@b[#1]#2[#3]{%
-  \begin{editor}{#2}[#3]
+% botões decorativos da janela
+\def\botoesjanela{%
+\begin{tikzpicture}
+  \draw[line width=0.5pt] (0,0) -- +(0.25,0) node{};
+  \draw[line width=0.5pt] (0.4,0) rectangle +(0.25,0.25) node{};
+  \draw[line width=0.5pt] (0.8,0) -- +(0.25,0.25) node{};
+  \draw[line width=0.5pt] (0.8,0.25) -- +(0.25,-0.25) node{};
+\end{tikzpicture}%
+}
+
+% uma imitação de janela
+% \begin{janela}{<título>}[<tcbparams>]
+%   <conteúdo>
+% \end{janela}
+\def\beginjanela@a#1[#2]{%
+  \tcbset{bicolor,
+    colframe=codetitle,
+    colbacktitle=codebg!90!codetitle,
+    after title={\hfill{}\botoesjanela{}},
+    before title={\hfill{}\raisebox{0.5ex}},
+    title=#1,
+    drop fuzzy shadow,
+    boxrule=0.5pt,
+    left=0ex,
+    bottom=0ex,
+    enlarge bottom by=-\medskipamount,
+    right=0ex,
+    toptitle=1ex,
+    titlerule=0.5pt,
+    coltitle=codetitle,
+    coltext=codefg,
+    fonttitle=\footnotesize,
+    fontupper=\footnotesize\ttfamily,
+    fontlower=\footnotesize\ttfamily
+  }
+  \ifdim\textwidth=\framewidth
+    \tcbset{grow sidewards by=3ex}
+  \fi
+  \begin{tcolorbox}[#2]
+}
+\newenvironment{janela}[1]{\@ifnextchar[{\beginjanela@a{#1}}{\beginjanela@a{#1}[]}}{%
+  \end{tcolorbox}
+}
+
+% insere uma tela com um arquivo
+% \arquivo[lstparams]{caminho}[tcbparams]
+\def\arquivo{\@ifnextchar[{\arquivo@a}{\arquivo@a[]}}
+\def\arquivo@a[#1]#2{\@ifnextchar[{\arquivo@b[#1]{#2}}{\arquivo@b[#1]{#2}[]}}
+\def\arquivo@b[#1]#2[#3]{%
+  \tcbset{
+  sidebyside=true,
+  sidebyside gap=1ex,
+  lefthand width=2ex,
+  top=3\medskipamount,
+  colback=codebg!90!codefg,
+  colbacklower=codebg}%
+  \begin{janela}{Arquivo: {#2}}[#3]%
+    \tcblower
     \lstinputlisting[#1]{#2}
-  \end{editor}
+  \end{janela}
+}
+
+% insere um terminal
+% \begin{terminal}[tcbparams]
+%   <conteúdo>
+% \end{terminal}
+\def\beginterminal@a[#1]{%
+  \tcbset{top=\medskipamount,colback=codebg}
+  \begin{janela}{Terminal}[#1]%
+}
+\newenvironment{terminal}{\@ifnextchar[{\beginterminal@a}{\beginterminal@a[]}}{%
+  \end{janela}
 }
 
 % insere um slide com código
-% \sourcecodeframe[<lstlisting params>]{<file path>}[<mdf params>]
-\def\sourcecodeframe{\@ifnextchar[{\sourcecodeframe@a}{\sourcecodeframe@a[]}}
-\def\sourcecodeframe@a[#1]#2{\@ifnextchar[{\sourcecodeframe@b[#1]{#2}}{\sourcecodeframe@b[#1]{#2}[]}}
-\def\sourcecodeframe@b[#1]#2[#3]{%
+% \framearquivo[<lstparams>]{<caminho>}[<tcbparams>]
+\def\framearquivo{\@ifnextchar[{\framearquivo@a}{\framearquivo@a[]}}
+\def\framearquivo@a[#1]#2{\@ifnextchar[{\framearquivo@b[#1]{#2}}{\framearquivo@b[#1]{#2}[]}}
+\def\framearquivo@b[#1]#2[#3]{%
   \begingroup
   \setbeamercolor{background canvas}{bg=codebg}
-  \begin{frame}[plain]%
-    \sourcecode[#1]{#2}[#3]
+  \begin{frame}[t,plain]
+    \begin{columns}[T]
+      \begin{column}[t]{\paperwidth}
+        \arquivo[#1]{#2}[%
+        no shadow,
+        colframe=codefg,
+        sharp corners,
+        height=\dimexpr\paperheight-1pt,
+        boxrule=0pt,
+        titlerule=0.5pt,#3]
+      \end{column}
+    \end{columns}
   \end{frame}
   \endgroup
 }
+
 \makeatother
 
+% texto verde
+% \verde{<texto>}
+\newcommand{\verde}[1]{{\color{example text.fg}{#1}}}
+
+% texto verde em negrito
+% \verdito{<texto>}
+\newcommand{\verdito}[1]{\textbf{\color{example text.fg}{#1}}}
+
+% link para um outro slide
+% \slideref{<label>}
+\newcommand{\slideref}[1]{%
+  \tcbox[%
+    on line,
+    boxsep=0pt,
+    colback=white,
+    colframe=verde,
+    left=0.3ex,
+    right=0.3ex,
+    top=0.3ex,
+    bottom=0.3ex,
+    boxrule=0.5pt
+  ]{\bfseries\ref{#1}}%
+}
+
+% Ambiente questões
+\newcounter{ifrsquestao}
+\newenvironment{questoes}{%
+  \begin{enumerate}\setcounter{enumi}{\theifrsquestao}
+}{%
+  \end{enumerate}\setcounter{ifrsquestao}{\theenumi}
+}
+% QUESTION : fazer um ambiente questoes* que não continua a numeração?
+
+
+% Colunas especiais para código e texto com fonte monoespaçada
+\newcolumntype{I}{>{\collectcell{\inline}}l<{\endcollectcell}}
+\newcolumntype{i}{>{\collectcell{\inline*}}l<{\endcollectcell}}
 
 \mode
 <all>

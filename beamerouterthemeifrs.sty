@@ -1,7 +1,9 @@
 \setbeamertemplate{frametitle continuation}{}
 \setbeamertemplate{frametitle}{
     \begin{beamercolorbox}[wd=14cm,ht=1.5cm]{frametitle}
+        \begingroup\let \\ ~\relax%
         \MakeUppercase{\insertframetitle}%
+        \endgroup%
         \ifx\insertframesubtitle\empty%
             \relax
         \else

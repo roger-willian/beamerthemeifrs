@@ -4,7 +4,6 @@
 
 \mode<presentation>
 
-\usepackage{listings}
 \usepackage[framemethod=tikz]{mdframed}
 \usepackage{xcolor}
 \usepackage{tikz}
@@ -12,12 +11,27 @@
 \usepackage{booktabs}
 \usepackage[alf]{abntex2cite}
 \usepackage[brazil]{babel}
-
+\usepackage{tcolorbox}
+\tcbuselibrary{skins}
+\tcbuselibrary{listings}
+\usepackage{textcomp}
+\usepackage{collcell}
 
 \useinnertheme{ifrs}
 \useoutertheme{ifrs}
 \usecolortheme{ifrs}
 \usefonttheme{ifrs}
+\parskip\medskipamount
+\makeatletter
+\newcommand{\@minipagerestore}{\parskip\medskipamount\vspace*{-2\parskip}}
+\makeatother
 
+\hypersetup{
+  colorlinks=true,
+  linkcolor=verde,
+  urlcolor=verde,
+  pdfstartview=Fit,
+  pdfpagelayout=SinglePage
+}
 
 \mode<all>

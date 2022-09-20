@@ -1,0 +1,34 @@
+# Workflow principal
+name: principal
+
+# Hooks
+on:
+  # Inicia com um push no ramo principal
+  push:
+    branches: [ "main" ]
+
+  # Pode rodar com um clique
+  workflow_dispatch:
+
+# O único job desse workflow
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    # Clona o model, gera e sobe o PDF
+    steps:
+      # Clone para o $GITHUB_WORKSPACE
+      - uses: actions/checkout@v3
+
+      # Gera o PDF
+      - name: latexmk
+        uses: docker://rogerwillian/latex
+        with:
+          entrypoint: latexmk
+          args: -pdf slides.tex -output-directory=/github/workspace
+
+      # Sobe o PDF gerado
+      - uses: actions/upload-artifact@v3
+        with:
+          name: slides.pdf
+          path: slides.pdf
