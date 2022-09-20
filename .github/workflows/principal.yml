@@ -27,8 +27,20 @@ jobs:
           entrypoint: latexmk
           args: -pdf slides.tex -output-directory=/github/workspace
 
-      # Sobe o PDF gerado
+      # Sobe o os arquivos para release
       - uses: actions/upload-artifact@v3
         with:
-          name: slides.pdf
-          path: slides.pdf
+          name: release.zip
+          path: |
+            code/
+            images/pdf/
+            images/bitmap/
+            beamercolorthemeifrs.sty
+            beamerfontthemeifrs.sty
+            beamerinnerthemeifrs.sty
+            beamerouterthemeifrs.sty
+            beamerthemeifrs.sty
+            bg-16x9.pdf
+            bg-titulo-16x9.pdf
+            referencias.bib
+            slides.tex
