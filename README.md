@@ -6,7 +6,9 @@ Esse repositório contém um tema de apresentação do Beamer que se assemelha a
 
 Esse tema ainda utiliza elementos retirados diretamente do Manual de Identidade Institucional do IFRS e do Manual de Aplicação da Marca dos Institutos Federais, disponíveis [aqui](https://ifrs.edu.br/institucional/comunicacao/guias-e-manuais/).
 
-Esse não é um repositório oficial do IFRS.
+**Esse não é um repositório oficial do IFRS.**
+
+Veja [aqui](#overleaf) como copiar o projeto para o Overleaf, ou continue lendo.
 
 # Gerar o PDF
 
@@ -43,14 +45,15 @@ São sugeridas duas maneiras de produzir os slides:
 ### Latexmk
 
 Aqui é assumido que o TexLive e o latexmk já estão instalados na máquina.
-Se ainda não instalou, veja a seção [Dependências](#dependencias)
-Baixe o arquivo compactado com a release desejada [aqui](https://github.com/roger-willian/beamerthemeifrs/releases).
-Descompacte o arquivo para um diretório próprio.
-Entre no diretório e, se , para gerar o PDF use o comando:
+Se ainda não instalou, veja a seção [Dependências](#dependencias) logo abaixo.
+Siga os seguintes passos:
 
-`latexmk -pdf slides.tex`
+1. Baixe o arquivo compactado com a release desejada [aqui](https://github.com/roger-willian/beamerthemeifrs/releases).
+2. Descompacte o arquivo para um diretório próprio.
+2. Entre no diretório e para gerar o PDF use o comando:  
+ `latexmk -pdf slides.tex`
 
-### Overleaf
+### <a name="overleaf"></a>Overleaf
 
 O [Overleaf](https://www.overleaf.com) é um serviço de edição de LaTeX e geração de PDF muito usado no meio acadêmico.
 
@@ -58,6 +61,7 @@ Para copiar os arquivos necessários para um novo projeto no Overleaf e já sair
 
 # <a name="dependencias"></a>Dependências
 
+Se optar por não usar o Overleaf e gerar o PDF localmente, será necessário instalar algumas dependências.
 Para instalar o TexLive e o latexmk no Ubuntu, use:
 
 ```
